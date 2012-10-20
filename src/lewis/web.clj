@@ -11,7 +11,7 @@
   (route/not-found "Not found..."))
 
 (def app
-  (-> app-routes
+  (-> #'app-routes
     (wrap-reload)
     (handler/site :session)))
 
