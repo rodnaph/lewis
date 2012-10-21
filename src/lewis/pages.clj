@@ -5,14 +5,15 @@
             [lewis.form :as form]
             [lewis.db :as db]))
 
-(defn entity2row [[id]]
-  (let [e (d/entity (db/database) id)]
-    [:tr
-      [:td (:db/ident e)]
-      [:td (:db/doc e)]
-      [:td (:db/valueType e)]
-      [:td (:db/cardinality e)]
-      [:td (pr-str (keys e))]]))
+(defn entity2schema [e]
+  [:tr
+    [:td (str (:db/ident e))]
+    [:td (:db/doc e)]
+    [:td (:db/valueType e)]
+    [:td (:db/cardinality e)]])
+
+(defn- to-entity [[id]]
+  (d/entity (db/database) id))
 
 (defn- query-table [tx & [params]]
   (let [results (q tx (db/database) params)]
@@ -23,13 +24,11 @@
           [:th "Identifier"]
           [:th "Docs"]
           [:th "ValueType"]
-          [:th "Cardinality"]
-          [:th]]]
+          [:th "Cardinality"]]]
       [:tbody
-        (map entity2row results)]]))
-
-(defn- transact-result [schema-tx result-tx]
-  [:h2 "Results... @todo"])
+        (->> results
+          (map to-entity)
+          (map entity2schema))]]))
 
 ;; Public
 ;; ------
