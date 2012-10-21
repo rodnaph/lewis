@@ -8,9 +8,9 @@
     (html
       [:head
         [:title (format "Lewis - %s" title)]
-        (include-css "/assets/bootstrap-2.0/css/bootstrap.css")
-        (include-css "/assets/codemirror-2.34/codemirror.css")
-        (include-css "/assets/css/main.css")]
+        (include-css "/assets/bootstrap-2.0/css/bootstrap.css"
+                     "/assets/codemirror-2.34/codemirror.css"
+                     "/assets/css/main.css")]
       [:body
         [:div.container
           [:div.navbar.navbar-inverse.navbar-fixed-top
@@ -27,15 +27,15 @@
                       [:li
                         [:a {:href "/session/transact"} "Transact"]]
                       [:li
-                        [:a {:href "/session/disconnect"} "Disconnect"]]]
+                        [:a {:href "/session/disconnect" :class "disconnect"} "Disconnect"]]]
                      [:div.pull-right.uri
                        (session/uri)]])]]]
           content
           [:div.row
             [:div.span12.footer
               "Lewis"]]
-          (include-js "/assets/js/jquery-1.8.2.js")
-          (include-js "/assets/codemirror-2.34/codemirror.js")
-          (include-js "/assets/js/codemirror/clojure.js")
-          (include-js "/assets/js/main.js")]])))
+          (include-js "/assets/js/3rdparty/jquery-1.8.2.js"
+                      "/assets/codemirror-2.34/codemirror.js"
+                      "/assets/js/3rdparty/codemirror/clojure.js"
+                      "/assets/js/main.js")]])))
 

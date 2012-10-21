@@ -14,8 +14,7 @@
   (GET "/disconnect" [] actions/disconnect)
   (GET "/schema" [] pages/schema)
 
-  (GET "/query" [] pages/query-form)
-  (POST "/query" [] pages/query)
+  (GET "/query" [] pages/query)
 
   (GET "/transact" [] pages/transact-form)
   (POST "/transact" [] pages/transact))

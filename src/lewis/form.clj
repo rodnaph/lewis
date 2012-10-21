@@ -7,9 +7,9 @@
     {:class "btn btn-primary"}
     text))
                    
-(defn- query-to [url]
-  (form-to [:post url]
-    (text-area "query")
+(defn- query-to [to & [tx]]
+  (form-to to
+    (text-area "tx" tx)
     (submit "Execute")))
 
 
@@ -22,9 +22,9 @@
       (text-field "url")
       (submit "Connect")]))
 
-(defn query []
-  (query-to "/session/query"))
+(defn query [& [tx]]
+  (query-to [:get "/session/query"] tx))
 
-(defn transact []
-  (query-to "/session/transact"))
+(defn transact [& [tx]]
+  (query-to [:post "/session/transact"] tx))
 

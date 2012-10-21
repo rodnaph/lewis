@@ -1,17 +1,26 @@
 
 $(function()
 {
+    window.editors = [];
+
     function initCodeElement()
     {
         var config = {
-            mode: "clojure",
+            mode: "commonlisp",
             lineNumbers: true,
             matchBrackets: true
         };
 
-        CodeMirror.fromTextArea(this, config);
+        var editor = CodeMirror.fromTextArea(this, config);
+
+        window.editors.push(editor);
     }
 
     $('textarea').each(initCodeElement);
+
+    $('.disconnect')
+        .click(function() {
+            return confirm('Are you sure?');
+        });
 });
 
