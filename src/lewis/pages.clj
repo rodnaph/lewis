@@ -5,10 +5,6 @@
             [lewis.form :as form]
             [lewis.db :as db]))
 
-(defn- connection [session]
-  [:div.row
-    [:div.span12 (format "Connected to: %s" (:url session))]])
-
 (defn entity2row [[id]]
   (let [e (d/entity (db/database) id)]
     [:tr
@@ -54,28 +50,28 @@
   (layout/standard "Home"
     "HOME"))
 
+(defn schema [req]
+  (do-query '[:find ?e 
+              :where [?e :db/valueType]]))
+
 (defn query-form [req]
   (layout/standard "Query"
-    "Make a query"))
+    [:div.row
+      [:div.span12
+        [:h1 "Perform a Query"]
+        [:p "Enter your Datalog query below, and click 'Execute'"]
+        (form/query)]]))
 
 (defn query [{:keys [params]}]
   (do-query
     (read-string (:query params))))
 
-(defn schema [req]
-  (let [q1 '[:find ?e :where [?e :db/valueType]]
-        q2 '[:find ?attr
-             :where
-             [?e :db/valueType]
-             [?e :db/ident ?attr]
-             [(datomic.Util/namespace ?attr) ?ns]]]
-    (do-query q1)))
-
 (defn transact-form [{:keys [session]}]
   (layout/standard "Home"
-    (connection session)
     [:div.row
       [:div.span12
+        [:h1 "Performing a Transaction"]
+        [:p "Enter the EDN transaction you'd like to perform, and click 'Execute'"]
         (form/transact)]]))
 
 (defn transact [{:keys [params]}]

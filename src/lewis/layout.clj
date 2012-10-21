@@ -8,7 +8,8 @@
     (html
       [:head
         [:title (format "Lewis - %s" title)]
-        (include-css "/assets/bootstrap/css/bootstrap.css")
+        (include-css "/assets/bootstrap-2.0/css/bootstrap.css")
+        (include-css "/assets/codemirror-2.34/codemirror.css")
         (include-css "/assets/css/main.css")]
       [:body
         [:div.container
@@ -32,5 +33,9 @@
           content
           [:div.row
             [:div.span12.footer
-              "Lewis"]]]])))
+              "Lewis"]]
+          (include-js "/assets/js/jquery-1.8.2.js")
+          (include-js "/assets/codemirror-2.34/codemirror.js")
+          (include-js "/assets/js/codemirror/clojure.js")
+          (include-js "/assets/js/main.js")]])))
 

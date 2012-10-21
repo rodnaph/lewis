@@ -2,27 +2,29 @@
 (ns lewis.form
   (:use (hiccup core form)))
 
-(defn- control [text & content]
-  [:div.control-group
-    (if (> (count text) 0)
-      [:label {:class "control-label"} (format "%s:" text)])
-    [:div.controls
-      content]])
+(defn- submit [text]
+  (submit-button
+    {:class "btn btn-primary"}
+    text))
+                   
+(defn- query-to [url]
+  (form-to [:post url]
+    (text-area "query")
+    (submit "Execute")))
 
-(defn- form [to submit & content]
-  (form-to {:class "form-horizontal"} to
-    content
-    (control ""
-      (submit-button {:class "btn btn-primary"} submit))))
 
 ;; Public
 ;; ------
 
 (defn connect []
-  (form [:post "/connect"] "Connect"
-    (control "URL" (text-field "url"))))
+  (form-to [:post "/connect"]
+    [:div.input-append
+      (text-field "url")
+      (submit "Connect")]))
+
+(defn query []
+  (query-to "/session/query"))
 
 (defn transact []
-  (form [:post "/session/transact"] "Execute"
-    (control "Command" (text-area "query"))))
+  (query-to "/session/transact"))
 

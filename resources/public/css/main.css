@@ -7,6 +7,11 @@ body {
     padding: 8px;
 }
 
+.CodeMirror {
+    border: 1px #ddd solid;
+    margin-bottom: 20px;
+}
+
 .footer {
     margin-top: 30px;
     padding-top: 20px;
