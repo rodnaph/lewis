@@ -17,16 +17,18 @@
               [:div.container
                 [:a.brand {:href home-url} "Lewis"]
                 (if (session/exists)
-                  [:ul.nav
-                    [:li
-                      [:a {:href "/session/schema"} "Schema"]]
-                    [:li
-                      [:a {:href "/session/query"} "Query"]]
-                    [:li
-                      [:a {:href "/session/transact"} "Transact"]]
-                    [:li
-                      [:a {:href "/session/disconnect"} "Disconnect"]]])
-                ]]]
+                  [:span
+                    [:ul.nav
+                      [:li
+                        [:a {:href "/session/schema"} "Schema"]]
+                      [:li
+                        [:a {:href "/session/query"} "Query"]]
+                      [:li
+                        [:a {:href "/session/transact"} "Transact"]]
+                      [:li
+                        [:a {:href "/session/disconnect"} "Disconnect"]]]
+                     [:div.pull-right.uri
+                       (session/uri)]])]]]
           content
           [:div.row
             [:div.span12.footer

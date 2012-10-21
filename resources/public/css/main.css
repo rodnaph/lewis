@@ -3,3 +3,15 @@ body {
     margin-top: 60px;
 }
 
+.uri {
+    padding: 8px;
+}
+
+.footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    color: #aaa;
+    border-top: 1px #eee solid;
+    text-align: center;
+}
+

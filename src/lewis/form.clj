@@ -4,7 +4,7 @@
 
 (defn- control [text & content]
   [:div.control-group
-    (if (> 0 (count text))
+    (if (> (count text) 0)
       [:label {:class "control-label"} (format "%s:" text)])
     [:div.controls
       content]])
@@ -12,7 +12,8 @@
 (defn- form [to submit & content]
   (form-to {:class "form-horizontal"} to
     content
-    (control "" (submit-button submit))))
+    (control ""
+      (submit-button {:class "btn btn-primary"} submit))))
 
 ;; Public
 ;; ------

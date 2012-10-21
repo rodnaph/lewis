@@ -46,7 +46,8 @@
   (layout/standard "Connect"
     [:div.row
       [:div.span12
-        [:p "Enter the Datomic details:"]
+        [:h1 "Connect"]
+        [:p "Enter the Datomic URI to connect."]
         (form/connect)]]))
 
 (defn home [req]
