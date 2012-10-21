@@ -102,6 +102,9 @@
         [:div.span12
           [:pre (pr-str tx)]]
         [:div.span12
+          [:input]
+          [:p "Filter by namespace?"]]
+        [:div.span12
           (query-table tx)]])))
 
 (defn query [{:keys [params]}]
