@@ -9,6 +9,36 @@
   [:div.row
     [:div.span12 (format "Connected to: %s" (:url session))]])
 
+(defn entity2row [[id]]
+  (let [e (d/entity (db/database) id)]
+    [:tr
+      [:td (:db/id e)]
+      [:td (:db/doc e)]
+      [:td (:db/valueType e)]
+      [:td (:db/cardinality e)]]))
+
+(defn- do-query [tx & [params]]
+  (let [results (q tx (db/database) params)]
+    (layout/standard "Schema"
+      [:div.row
+        [:div.span8
+          [:h2 (format "Found %d result(s)" (count results))]
+          [:table.table
+            [:thead
+              [:tr
+                [:th "Identifier"]
+                [:th "Docs"]
+                [:th "ValueType"]
+                [:th "Cardinality"]]]
+            [:tbody
+              (map entity2row results)]]
+          [:h3 "Raw Results"]
+          [:pre
+           (pr-str results)]]
+        [:div.span4
+          [:h2 "Query"
+            [:pre (pr-str tx)]]]])))
+
 ;; Public
 ;; ------
 
@@ -27,21 +57,18 @@
   (layout/standard "Query"
     "Make a query"))
 
-(defn query [req]
-  "Do query...")
+(defn query [{:keys [params]}]
+  (do-query
+    (read-string (:query params))))
 
 (defn schema [req]
-  (let [query '[:find ?attr
-                :in $
-                :where [?e db/valueType]]
-        results (q query (db/database))]
-    (layout/standard "Schema"
-      [:div.row
-        [:div.span8
-          [:h2 (format "Found %d result(s)" (count results))]]
-        [:div.span4
-          [:h2 "Query"
-            [:pre (pr-str query)]]]])))
+  (let [q1 '[:find ?e :where [?e :db/valueType]]
+        q2 '[:find ?attr
+             :where
+             [?e :db/valueType]
+             [?e :db/ident ?attr]
+             [(datomic.Util/namespace ?attr) ?ns]]]
+    (do-query q1)))
 
 (defn transact-form [{:keys [session]}]
   (layout/standard "Home"
@@ -59,5 +86,4 @@
       (println "Error: " (.getMessage e))
       (.printStackTrace e)
       "Invalid transaction...")))
-
 
