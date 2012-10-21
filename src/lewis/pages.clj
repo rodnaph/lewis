@@ -13,7 +13,7 @@
     [:td (:db/valueType e)]
     [:td (:db/cardinality e)]])
 
-(defn- to-entity [[id]]
+(defn- to-entity [id]
   (d/entity (db/database) id))
 
 (defn- query-table [tx & [params]]
@@ -28,8 +28,42 @@
           [:th "Cardinality"]]]
       [:tbody
         (->> results
-          (map to-entity)
+          (map (comp to-entity first))
           (map entity2schema))]]))
+
+(defn- cols4results [res]
+  (let [id (ffirst res)
+        e (to-entity id)]
+    (keys e)))
+
+(defn- to-th [col]
+  [:th col])
+
+(defn to-td [e col]
+  [:td (get e col)])
+
+(defn- to-tr [cols e]
+  [:tr
+    (map (partial to-td e) cols)])
+
+(defn- table-for [cols res]
+  [:table.table
+    [:thead
+      [:tr
+        (map to-th cols)]]
+    [:tbody
+      (->> res
+           (map (comp to-entity first))
+           (map (partial to-tr cols)))]])
+
+(defn- results-table [tx]
+  (let [res (q (read-string tx) (db/database))]
+    (if (empty? res)
+      "No Results..."
+      (let [cols (cols4results res)]
+        [:span
+          [:h2 (format "Found %d result(s)" (count res))]
+          (table-for cols res)]))))
 
 (defn- to-recent-query [tx]
   (let [url (format "/session/query?tx=%s" tx)]
@@ -84,7 +118,7 @@
           (form/query tx)]
         (if tx 
           [:div.span12
-            (query-table tx)])])))
+            (results-table tx)])])))
 
 (defn transact-form [{:keys [session]}]
   (layout/standard "Home"

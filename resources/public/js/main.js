@@ -6,7 +6,7 @@ $(function()
     function initCodeElement()
     {
         var config = {
-            mode: "commonlisp",
+            mode: "clojure",
             lineNumbers: true,
             matchBrackets: true
         };
