@@ -3,7 +3,8 @@
   (:use [datomic.api :only [q] :as d])
   (:require [lewis.layout :as layout]
             [lewis.form :as form]
-            [lewis.db :as db]))
+            [lewis.db :as db]
+            [lewis.history :as history]))
 
 (defn entity2schema [e]
   [:tr
@@ -30,6 +31,11 @@
           (map to-entity)
           (map entity2schema))]]))
 
+(defn- to-recent-query [tx]
+  (let [url (format "/session/query?tx=%s" tx)]
+    [:li
+      [:a {:href url} tx]]))
+
 ;; Public
 ;; ------
 
@@ -51,7 +57,8 @@
         [:p "@todo if makes sense"]]
       [:div.span4
         [:h2 "Recent Queries"]
-        [:p "@todo"]]]))
+        [:ul
+          (map to-recent-query (history/queries))]]]))
 
 (defn schema [req]
   (let [tx '[:find ?e 
@@ -65,6 +72,7 @@
 
 (defn query [{:keys [params]}]
   (let [tx (:tx params)]
+    (history/add-query! tx)
     (layout/standard "Query"
       [:div.row
         [:div.span12
