@@ -64,4 +64,10 @@
         [:h2 (format "Found %d result(s)" (count res))]
         (table res)])))
 
+(defn success [msg]
+  [:div.alert.alert-success msg])
+
+(defn error [e]
+  [:div.alert.alert-error 
+    "Error: " (.getMessage e)])
 

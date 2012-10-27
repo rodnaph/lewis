@@ -5,7 +5,7 @@
 
 (defn standard [title & content]
   (let [home-url (if (session/exists) "/session" "/")]
-    (html
+    (html5
       [:head
         [:title (format "Lewis - %s" title)]
         (include-css "/assets/bootstrap-2.0/css/bootstrap.css"
@@ -42,6 +42,7 @@
           (include-js "/assets/js/3rdparty/jquery-1.8.2.js"
                       "/assets/bootstrap-2.0/js/bootstrap.js"
                       "/assets/codemirror-2.34/codemirror.js"
+                      "/assets/js/3rdparty/underscore-1.4.2.js"
                       "/assets/js/3rdparty/codemirror/clojure.js"
                       "/assets/js/main.js")]])))
 

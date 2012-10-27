@@ -69,9 +69,7 @@
           (try
             (let [schema-tx (read-string tx)
                   result-tx (d/transact (db/connection) schema-tx)]
-              [:div.alert.alert-success 
-                "Transaction executed successfully"])
+              (results/success "Transaction executed successfully"))
             (catch Exception e
-              [:div.alert.alert-error 
-                "Error: " (.getMessage e)]))]])))
+              (results/error e)))]])))
 

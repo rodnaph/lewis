@@ -2,11 +2,8 @@
 (ns lewis.form
   (:use (hiccup core form)))
 
-(defn- submit [text]
-  (submit-button
-    {:class "btn btn-primary"}
-    text))
-                   
+(declare submit)
+                  
 (defn- query-to [to & [tx]]
   (form-to to
     (text-area "tx" tx)
@@ -16,7 +13,12 @@
 ;; Public
 ;; ------
 
-(defn connect []
+(defn submit [text]
+  (submit-button
+    {:class "btn btn-primary"}
+    text))
+
+ (defn connect []
   (form-to [:post "/connect"]
     [:div.input-append
       (text-field "url")

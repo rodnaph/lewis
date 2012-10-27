@@ -16,6 +16,7 @@
 
   (GET "/data" [] data/query)
   (GET "/data/insert" [] data/insert-form)
+  (POST "/data/insert" [] data/insert)
 
   (GET "/schema" [] pages/schema)
   (GET "/schema/transact" [] pages/transact-form)

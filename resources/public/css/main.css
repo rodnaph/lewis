@@ -16,6 +16,22 @@ body {
     color: #c33;
 }
 
+.form-insert .field,
+.form-insert .add {
+    clear: left;
+}
+
+.form-insert .name,
+.form-insert .value {
+    float: left;
+    margin: 8px;
+}
+
+.form-insert .add {
+    float: left;
+    margin: 10px 0 10px 0;
+}
+
 .footer {
     margin-top: 30px;
     padding-top: 20px;
