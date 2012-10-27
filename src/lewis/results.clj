@@ -38,6 +38,14 @@
              (map (comp id2entity first))
              (map (partial to-tr cols)))]]))
 
+(defn- res-empty []
+  "No results...")
+
+(defn- res-show [res]
+  [:span
+    [:h2 (format "Found %d result(s)" (count res))]
+    (table res)])
+
 ;; Public
 ;; ------
 
@@ -60,18 +68,19 @@
         (map (comp id2entity first))
         (map entity2schema))]])
 
-(defn render [tx]
-  (let [res (q (read-string tx) (db/database))]
-    (if (empty? res)
-      "No Results..."
-      [:span
-        [:h2 (format "Found %d result(s)" (count res))]
-        (table res)])))
-
 (defn success [msg]
   [:div.alert.alert-success msg])
 
 (defn error [e]
   [:div.alert.alert-error 
     "Error: " (.getMessage e)])
+
+(defn render [tx]
+  (try
+    (let [res (q (read-string tx) (db/database))]
+      (if (empty? res)
+        (res-empty)
+        (res-show res)))
+    (catch Exception e
+      (error e))))
 
