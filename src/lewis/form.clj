@@ -18,6 +18,11 @@
     {:class "btn btn-primary"}
     text))
 
+(defn row [label control]
+  [:div.control-group
+    [:label.control-label label]
+    [:div.controls control]])
+
  (defn connect []
   (form-to [:post "/connect"]
     [:div.input-append

@@ -1,10 +1,51 @@
 
 (ns lewis.schema.core
-  (:use [datomic.api :only [q] :as d])
+  (:use (hiccup form)
+        [datomic.api :only [q] :as d])
   (:require [lewis.layout :as layout]
             [lewis.form :as form]
             [lewis.results :as results]
             [lewis.db :as db]))
+
+(def valueTypes [ "string"
+                  "boolean"
+                  "long"
+                  "bigint"
+                  "float"
+                  "double"
+                  "bigdec"
+                  "ref"
+                  "instant"
+                  "uuid"
+                  "uri"
+                  "bytes" ])
+
+(def cardinalities [ "one" "many" ])
+
+;; Public
+;; ------
+
+(defn update [req]
+  (layout/standard "Update Schema"
+    [:h1 "Updating the Schema"]
+    [:p "The form below allows you to alter the database schema.  As you "
+        "use it you will see the EDN that will be used in the transaction."]
+      [:div.form-horizontal.schema-update
+        (form/row "Identifier"
+                  (text-field "ident"))
+        (form/row "Value Type" 
+                  (drop-down "valueType" valueTypes))
+        (form/row "Cardinality"
+                  (drop-down "cardinality" cardinalities))
+        (form/row "Documentation"
+                  (text-field "doc"))
+        (form/row "Fulltext?"
+                  (check-box "fulltext"))
+        (form/row "No history?"
+                  (check-box "noHistory"))
+        (form-to [:post "/session/schema/transact"]
+          (text-area {:readonly "readonly"} "tx")
+          (form/submit "Transact"))]))
 
 (defn show [req]
   (let [tx '[:find ?e 
