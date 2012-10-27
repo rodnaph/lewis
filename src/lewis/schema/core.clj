@@ -51,7 +51,7 @@
         (form/row "No history?"
                   (check-box "noHistory"))
         (form-to [:post "/session/schema/transact"]
-          (text-area {:readonly "readonly"} "tx")
+          (text-area "tx")
           (form/submit "Transact"))]))
 
 (defn show [req]

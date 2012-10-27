@@ -42,7 +42,13 @@ body {
 }
 
 .schema-update {
-    margin-top: 15px;
+    margin-top: 25px;
+}
+
+.schema-update .CodeMirror {
+    margin-top: 20px;
+    width: 420px;
+    height: 130px;
 }
 
 .footer {
