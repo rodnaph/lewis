@@ -16,6 +16,22 @@ body {
     color: #c33;
 }
 
+.navbar {
+    box-shadow: #aaa 0px 4px 4px;
+}
+
+.form-insert .delete {
+    color: #faa;
+    position: relative;
+    top: 13px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.form-insert .delete:hover {
+    color: #c33;
+}
+
 .form-insert .field,
 .form-insert .add {
     clear: left;

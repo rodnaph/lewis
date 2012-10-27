@@ -86,7 +86,7 @@ $(function()
 
         $('<a></a>')
             .html('delete')
-            .addClass('btn btn-destroy')
+            .addClass('delete')
             .click(destroy)
             .appendTo(row);
     }
