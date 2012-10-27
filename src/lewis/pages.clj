@@ -38,14 +38,14 @@
 
 (defn schema [req]
   (let [tx '[:find ?e 
-             :where [?e :db/valueType]]]
+             :where [?e :db/valueType]]
+        edit-url (format "/session/data?tx=%s" (pr-str tx))]
     (layout/standard "Schema"
       [:div.row
         [:div.span12
           [:pre (pr-str tx)]]
-        [:div.span12
-          [:input]
-          [:p [:i "Filter by namespace?"]]]
+        [:div.span12.edit-query
+          [:a {:href edit-url} "Edit query"]]
         [:div.span12
           (results/schema (q tx (db/database)))]])))
 

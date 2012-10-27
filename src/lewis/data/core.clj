@@ -28,7 +28,7 @@
 (defn insert-form [req]
   (layout/standard "Inserting Data"
     [:div.row
-      [:div.span12
+      [:div.span8
         [:h1 "Inserting Data"]
         [:p "To insert some data, enter the names and values into the fields "
             "below and then click insert."]
@@ -40,7 +40,7 @@
                 (text-field {:disabled "disabled"} "name" ":db/id")]
               [:div.value
                 (text-field {:disabled "disabled"} "value" "#db/id[:db.part/user]")]]]
-          [:div.field
+          [:div.field.submit
             (form/submit "Insert Value")])]]))
 
 (defn insert [{:keys [form-params]}]

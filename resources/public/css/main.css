@@ -32,6 +32,15 @@ body {
     margin: 10px 0 10px 0;
 }
 
+.form-insert .submit {
+    text-align: right;
+}
+
+.edit-query {
+    text-align: right;
+    margin-bottom: 15px;
+}
+
 .footer {
     margin-top: 30px;
     padding-top: 20px;
