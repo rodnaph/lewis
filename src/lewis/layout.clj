@@ -20,12 +20,17 @@
                 (if (session/exists)
                   [:span
                     [:ul.nav
-                      [:li
-                        [:a {:href "/session/schema"} "Schema"]]
-                      [:li
-                        [:a {:href "/session/query"} "Query"]]
-                      [:li
-                        [:a {:href "/session/transact"} "Transact"]]
+                      [:li.dropdown
+                        [:a.dropdown-toggle {:data-toggle "dropdown" :href "/session/data"} "Data " [:b.caret]]
+                        [:ul.dropdown-menu
+                          [:li [:a {:href "/session/data"} "Query"]]
+                          [:li [:a {:href "/session/data/insert"} "Insert"]]]]
+                      [:li.dropdown
+                        [:a.dropdown-toggle {:data-toggle "dropdown" :href "/session/schema"} "Schema " [:b.caret]]
+                        [:ul.dropdown-menu
+                          [:li [:a {:href "/session/schema"} "Browse"]]
+                          [:li [:a {:href "/session/schema/update"} "Update"]]
+                          [:li [:a {:href "/session/schema/transact"} "Transact"]]]]
                       [:li
                         [:a {:href "/session/disconnect" :class "disconnect"} "Disconnect"]]]
                      [:div.pull-right.uri
@@ -35,6 +40,7 @@
             [:div.span12.footer
               "Lewis"]]
           (include-js "/assets/js/3rdparty/jquery-1.8.2.js"
+                      "/assets/bootstrap-2.0/js/bootstrap.js"
                       "/assets/codemirror-2.34/codemirror.js"
                       "/assets/js/3rdparty/codemirror/clojure.js"
                       "/assets/js/main.js")]])))

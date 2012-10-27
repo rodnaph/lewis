@@ -23,8 +23,8 @@
       (submit "Connect")]))
 
 (defn query [& [tx]]
-  (query-to [:get "/session/query"] tx))
+  (query-to [:get "/session/data"] tx))
 
 (defn transact [& [tx]]
-  (query-to [:post "/session/transact"] tx))
+  (query-to [:post "/session/schema/transact"] tx))
 

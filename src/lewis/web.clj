@@ -12,12 +12,13 @@
 (defroutes session-routes
   (GET "/" [] pages/home)
   (GET "/disconnect" [] actions/disconnect)
+
+  (GET "/data" [] pages/query)
+  (GET "/data/insert" [] pages/insert-form)
+
   (GET "/schema" [] pages/schema)
-
-  (GET "/query" [] pages/query)
-
-  (GET "/transact" [] pages/transact-form)
-  (POST "/transact" [] pages/transact))
+  (GET "/schema/transact" [] pages/transact-form)
+  (POST "/schema/transact" [] pages/transact))
 
 (defroutes app-routes
   (GET "/" [] pages/index)

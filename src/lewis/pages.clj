@@ -3,70 +3,20 @@
   (:use [datomic.api :only [q] :as d])
   (:require [lewis.layout :as layout]
             [lewis.form :as form]
+            [lewis.results :as results]
             [lewis.db :as db]
             [lewis.history :as history]))
-
-(defn entity2schema [e]
-  [:tr
-    [:td (str (:db/ident e))]
-    [:td (:db/doc e)]
-    [:td (:db/valueType e)]
-    [:td (:db/cardinality e)]])
-
-(defn- to-entity [id]
-  (d/entity (db/database) id))
-
-(defn- query-table [tx & [params]]
-  (let [results (q tx (db/database) params)]
-    [:h2 (format "Found %d result(s)" (count results))]
-    [:table.table
-      [:thead
-        [:tr
-          [:th "Identifier"]
-          [:th "Docs"]
-          [:th "ValueType"]
-          [:th "Cardinality"]]]
-      [:tbody
-        (->> results
-          (map (comp to-entity first))
-          (map entity2schema))]]))
-
-(defn- cols4results [res]
-  (let [id (ffirst res)
-        e (to-entity id)]
-    (keys e)))
-
-(defn- to-th [col]
-  [:th col])
-
-(defn to-td [e col]
-  [:td (get e col)])
-
-(defn- to-tr [cols e]
-  [:tr
-    (map (partial to-td e) cols)])
-
-(defn- table-for [cols res]
-  [:table.table
-    [:thead
-      [:tr
-        (map to-th cols)]]
-    [:tbody
-      (->> res
-           (map (comp to-entity first))
-           (map (partial to-tr cols)))]])
 
 (defn- results-table [tx]
   (let [res (q (read-string tx) (db/database))]
     (if (empty? res)
       "No Results..."
-      (let [cols (cols4results res)]
-        [:span
-          [:h2 (format "Found %d result(s)" (count res))]
-          (table-for cols res)]))))
+      [:span
+        [:h2 (format "Found %d result(s)" (count res))]
+        (results/table res)])))
 
 (defn- to-recent-query [tx]
-  (let [url (format "/session/query?tx=%s" tx)]
+  (let [url (format "/session/data?tx=%s" tx)]
     [:li
       [:a {:href url} tx]]))
 
@@ -103,9 +53,12 @@
           [:pre (pr-str tx)]]
         [:div.span12
           [:input]
-          [:p "Filter by namespace?"]]
+          [:p [:i "Filter by namespace?"]]]
         [:div.span12
-          (query-table tx)]])))
+          (results/schema (q tx (db/database)))]])))
+
+(defn insert-form [req]
+  "Insert")
 
 (defn query [{:keys [params]}]
   (let [tx (:tx params)]
