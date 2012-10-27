@@ -2,10 +2,15 @@
 (ns lewis.schema.core
   (:use (hiccup form)
         [datomic.api :only [q] :as d])
-  (:require [lewis.layout :as layout]
+  (:require [cheshire.core :as json]
+            [ring.util.response :as response]
+            [lewis.layout :as layout]
             [lewis.form :as form]
             [lewis.results :as results]
             [lewis.db :as db]))
+
+(def schema-tx '[:find ?e 
+                 :where [?e :db/valueType]])
 
 (def valueTypes [ "string"
                   "boolean"
@@ -26,6 +31,13 @@
 (def uniqueValues [ ""
                     "value"
                     "identity" ])
+
+(defn- get-schema []
+  (q schema-tx (db/database)))
+
+(defn- matches-term? [term e]
+  (let [ident (str (:db/ident e))]
+    (> (.indexOf ident term) -1)))
 
 ;; Public
 ;; ------
@@ -55,18 +67,25 @@
           (form/submit "Transact"))]))
 
 (defn show [req]
-  (let [tx '[:find ?e 
-             :where [?e :db/valueType]]
-        edit-url (format "/session/data?tx=%s" (pr-str tx))]
+  (let [edit-url (format "/session/data?tx=%s" (pr-str schema-tx))]
     (layout/standard "Schema"
       [:div.row
         [:div.span12
-          [:pre (pr-str tx)]]
+          [:pre (pr-str schema-tx)]]
         [:div.span12.edit-query
           [:a {:href edit-url} "Edit query"]]
         [:div.span12.schema-filter]
         [:div.span12
-          (results/schema (q tx (db/database)))]])))
+          (results/schema (get-schema))]])))
+
+(defn json [{:keys [params]}]
+  (let [term (get params :term "")
+        res (->> (get-schema)
+                 (map results/result2entity)
+                 (filter (partial matches-term? term)))]
+    (response/content-type
+      {:body (json/generate-string res)}
+      "application/json")))
 
 (defn transact-form [{:keys [session]}]
   (layout/standard "Home"

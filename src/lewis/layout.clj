@@ -10,6 +10,7 @@
         [:title (format "Lewis - %s" title)]
         (include-css "/assets/bootstrap-2.0/css/bootstrap.css"
                      "/assets/codemirror-2.34/codemirror.css"
+                     "/assets/select2-3.2/select2.css"
                      "/assets/css/main.css")]
       [:body
         [:div.container
@@ -40,6 +41,7 @@
             [:div.span12.footer
               "Lewis"]]
           (include-js "/assets/js/3rdparty/jquery-1.8.2.js"
+                      "/assets/select2-3.2/select2.min.js"
                       "/assets/bootstrap-2.0/js/bootstrap.js"
                       "/assets/codemirror-2.34/codemirror.js"
                       "/assets/js/3rdparty/underscore-1.4.2.js"

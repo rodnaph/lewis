@@ -1,4 +1,19 @@
 
+function controlFor(container, name)
+{
+    return $('*[name=' +name+ ']', container);
+}
+
+function valueFrom(name)
+{
+    return controlFor(this, name)
+        .val();
+}
+
+/**
+ * Schema filtering
+ */
+
 $(function()
 {
     function toggle(value, index, element)
@@ -33,19 +48,12 @@ $(function()
         .each(init);
 });
 
+/**
+ * Schema update controls
+ */
+
 $(function()
 {
-    function controlFor(container, name)
-    {
-        return $('*[name=' +name+ ']', container);
-    }
-
-    function valueFrom(name)
-    {
-        return controlFor(this, name)
-            .val();
-    }
-
     function booleanFrom(name)
     {
         return controlFor(this, name)
@@ -106,6 +114,10 @@ $(function()
         .each(init);
 });
 
+/**
+ * Data inserting
+ */
+
 $(function()
 {
     function remove(row)
@@ -125,6 +137,31 @@ $(function()
             .appendTo(row);
     }
 
+    function toNameValue(field)
+    {
+        var valueOf = _.bind(valueFrom, field);
+
+        return { name: valueOf('name'),
+                 value: valueOf('value') };
+    }
+
+    function toEdn(acc, e)
+    {
+        return acc+ '\n   ' +e.name+ ' ' +e.value;
+    }
+
+    function update()
+    {
+        var editor = $('textarea', this).data('editor');
+        var fields = $('.field', this);
+        var edn = _.chain(fields)
+                   .map(toNameValue)
+                   .reduce(toEdn, '')
+                   .value();
+
+        editor.setValue('[{ ' +edn.substring(4)+ ' }]');
+    }
+
     function make(name)
     {
         var input = $('<input type="text"/>')
@@ -135,25 +172,60 @@ $(function()
             .append(input);
     }
 
-    function add(fields)
+    function toResult(datum)
     {
+        var id = ':' +datum['db/ident'];
+
+        return { id:id, text:id };
+    }
+
+    function results(data)
+    {
+        return {results: _.map(data, toResult)};
+    }
+
+    function query(term)
+    {
+        return {term: term};
+    }
+
+    function select2Changed(name, onChange, evt)
+    {
+        controlFor(name, 'name')
+            .val(evt.val);
+
+        onChange();
+    }
+
+    function add(container)
+    {
+        var fields = $('.fields', container);
+        var updater = _.bind(update, container);
+        var onChange = _.debounce(updater, 500);
+        var config = { placeholder: 'Select an atrribute...',
+                       ajax: { url: '/session/schema.json',
+                               data: query,
+                               results: results }};
+        var name = make('name');
+        var value = make('value');
         var row = $('<div></div>')
             .addClass('field')
-            .append(make('name'))
-            .append(make('value'))
+            .append(name)
+            .append(value)
             .appendTo(fields);
+
+        name.select2(config)
+            .on('change', _.bind(select2Changed, {}, name, onChange));
+        value.keyup(onChange);
 
         initRow.apply(row);
     }
 
-    /**
-     * Initialise the data insert form to allow adding/deleting fields
-     *
-     */
     function init()
     {
-        var fields = $('.fields', this);
-        var addRow = _.bind(add, {}, fields);
+        var container = $(this);
+        var fields = $('.fields', container);
+        var addRow = _.bind(add, {}, container);
 
         $('<a></a>')
             .addClass('add btn btn-info')
@@ -162,7 +234,7 @@ $(function()
             .insertAfter(fields);
     }
 
-    $('.form-insert')
+    $('.data-insert')
         .each(init);
 });
 

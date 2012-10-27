@@ -3,7 +3,9 @@
   (:use [datomic.api :only [q] :as d])
   (:require [lewis.db :as db]))
 
-(defn entity2schema [e]
+(declare id2entity)
+
+(defn- entity2schema [e]
   [:tr
     [:td (str (:db/ident e))]
     [:td (:db/doc e)]
@@ -20,12 +22,9 @@
   [:tr
     (map (partial to-td e) cols)])
 
-(defn- to-entity [id]
-  (d/entity (db/database) id))
-
 (defn- cols4results [res]
   (let [id (ffirst res)
-        e (to-entity id)]
+        e (id2entity id)]
     (keys e)))
 
 (defn- table [res]
@@ -36,11 +35,16 @@
           (map to-th cols)]]
       [:tbody
         (->> res
-             (map (comp to-entity first))
+             (map (comp id2entity first))
              (map (partial to-tr cols)))]]))
 
 ;; Public
 ;; ------
+
+(defn id2entity [id]
+  (d/entity (db/database) id))
+
+(def result2entity (comp id2entity first))
 
 (defn schema [results]
   [:h2 (format "Found %d result(s)" (count results))]
@@ -53,7 +57,7 @@
         [:th "Cardinality"]]]
     [:tbody
       (->> results
-        (map (comp to-entity first))
+        (map (comp id2entity first))
         (map entity2schema))]])
 
 (defn render [tx]

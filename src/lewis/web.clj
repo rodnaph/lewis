@@ -20,6 +20,7 @@
   (POST "/data/insert" [] data/insert)
 
   (GET "/schema" [] schema/show)
+  (GET "/schema.json" [] schema/json)
   (GET "/schema/update" [] schema/update)
   (GET "/schema/transact" [] schema/transact-form)
   (POST "/schema/transact" [] schema/transact))
