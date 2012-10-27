@@ -15,9 +15,8 @@
   (layout/standard "Inserting Data"
     [:div.row
       [:div.span8
-        [:h1 "Inserting Data"]
-        [:p "To insert some data, enter the names and values into the fields "
-            "below and then click insert."]
+        [:h1 "Inserting a Datom"]
+        [:p "To insert a datom, enter the attributes and values below, the EDN will be generated for you."]
         [:div.data-insert
           [:div.fields
             [:div.field
@@ -28,7 +27,7 @@
           (form-to [:post "/session/schema/transact"]
             (text-area "tx")
             [:div.submit
-              (form/submit "Insert Value")])]]]))
+              (form/submit "Insert Datom")])]]]))
 
 (defn query [{:keys [params]}]
   (let [tx (:tx params)]
