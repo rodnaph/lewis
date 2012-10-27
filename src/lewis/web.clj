@@ -8,7 +8,8 @@
             (lewis [pages :as pages]
                    [session :as session]
                    [actions :as actions])
-            [lewis.data.core :as data]))
+            [lewis.data.core :as data]
+            [lewis.schema.core :as schema]))
 
 (defroutes session-routes
   (GET "/" [] pages/home)
@@ -18,9 +19,9 @@
   (GET "/data/insert" [] data/insert-form)
   (POST "/data/insert" [] data/insert)
 
-  (GET "/schema" [] pages/schema)
-  (GET "/schema/transact" [] pages/transact-form)
-  (POST "/schema/transact" [] pages/transact))
+  (GET "/schema" [] schema/show)
+  (GET "/schema/transact" [] schema/transact-form)
+  (POST "/schema/transact" [] schema/transact))
 
 (defroutes app-routes
   (GET "/" [] pages/index)
