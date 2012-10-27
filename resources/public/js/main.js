@@ -229,7 +229,7 @@ $(function()
 
         $('<a></a>')
             .addClass('add btn btn-info')
-            .html('Add row')
+            .html('Add Attribute')
             .click(addRow)
             .insertAfter(fields);
     }
