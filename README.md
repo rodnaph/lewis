@@ -3,8 +3,7 @@ Lewis
 =====
 
 Lewis is meant to be a web interface for interacting with Datomic.
-I'm writing it to learn Datomic, so beware!  The information given
-below is Readme Driven Development, so is probably incomplete.
+I'm writing it to learn Datomic, so beware!
 
 Installation
 ------------
@@ -24,22 +23,36 @@ Datomic URI to your database.
 Usage
 =====
 
-When you have connected to Datomic, you will see some options in the
-top navigation bar.
+When you have connected to Datomic, you will see some options in the top navigation bar.
+
+Data
+----
+
+The data menu gives you _Query_ option, which will present an editor that you can
+enter arbitrary Datalog queries in.
+
+![](http://github.com/rodnaph/lewis/raw/master/screenshots/query.png)
+
+And there is also an _Insert_ option, which gives a simple interface for entering
+data into your Datomic database.
+
+![](http://github.com/rodnaph/lewis/raw/master/screenshots/insert.png)
 
 Schema
-------
-
-This will display information about the schema of your Datomic database,
-and allow you to edit/update it.
-
-Query
------
-
-This allows you to perform arbitrary Datalog queries on your Datomic database.
-
-Transact
 --------
 
-This allows you to execute arbitrary transations.
+The schema menu has options for browsing and editing the schema of your database.
+
+![](http://github.com/rodnaph/lewis/raw/master/screenshots/schema.png)
+
+And also just executing arbitrary transactions.
+
+![](http://github.com/rodnaph/lewis/raw/master/screenshots/transact.png)
+
+TODO
+====
+
+I'm hacking on this project to learn more about Datomic, so not even sure if what I've
+done so far is useful (or makes sense).  Making up features as I go then...  but if
+you do have any ideas please just open an issue or get in touch.
 
