@@ -8,12 +8,21 @@ $(function()
 
     function valueFrom(name)
     {
-        return controlFor(this, name).val();
+        return controlFor(this, name)
+            .val();
     }
 
     function booleanFrom(name)
     {
-        return controlFor(this, name).is(':checked');
+        return controlFor(this, name)
+            .is(':checked');
+    }
+
+    function uniqueVal(value)
+    {
+        return value
+            ? '   :db/unique :db.unique/' +value+ '\n'
+            : '';
     }
 
     function update()
@@ -27,6 +36,7 @@ $(function()
                   '   :db/valueType :db.type/' +valueOf('valueType')+ '\n' +
                   '   :db/cardinality :db.cardinality/' +valueOf('cardinality')+ '\n' +
                   '   :db/doc "' +valueOf('doc').replace('"', '\\"')+ '"\n' +
+                  uniqueVal(valueOf('unique')) +
                   '   :db/fulltext ' +booleanOf('fulltext')+ '\n' +
                   '   :db/noHistory ' +booleanOf('noHistory')+ '\n' +
                   '   :db.install/_attribute :db.part/db }]';

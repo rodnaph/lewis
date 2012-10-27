@@ -20,7 +20,12 @@
                   "uri"
                   "bytes" ])
 
-(def cardinalities [ "one" "many" ])
+(def cardinalityValues [ "one" 
+                         "many" ])
+
+(def uniqueValues [ ""
+                    "value"
+                    "identity" ])
 
 ;; Public
 ;; ------
@@ -36,7 +41,9 @@
         (form/row "Value Type" 
                   (drop-down "valueType" valueTypes))
         (form/row "Cardinality"
-                  (drop-down "cardinality" cardinalities))
+                  (drop-down "cardinality" cardinalityValues))
+        (form/row "Unique"
+                  (drop-down "unique" uniqueValues))
         (form/row "Documentation"
                   (text-field "doc"))
         (form/row "Fulltext?"
