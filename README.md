@@ -49,6 +49,11 @@ And also just executing arbitrary transactions.
 
 ![](http://github.com/rodnaph/lewis/raw/master/screenshots/transact.png)
 
+There is also a page to edit schema.  It has a bunch of controls so you can select
+the schema attributes you want, and the EDN is created for you below.
+
+![](http://github.com/rodnaph/lewis/raw/master/screenshots/update.png)
+
 TODO
 ====
 
