@@ -28,6 +28,17 @@
         e (to-entity id)]
     (keys e)))
 
+(defn- table [res]
+  (let [cols (cols4results res)]
+    [:table.table
+      [:thead
+        [:tr
+          (map to-th cols)]]
+      [:tbody
+        (->> res
+             (map (comp to-entity first))
+             (map (partial to-tr cols)))]]))
+
 ;; Public
 ;; ------
 
@@ -45,14 +56,12 @@
         (map (comp to-entity first))
         (map entity2schema))]])
 
-(defn table [res]
-  (let [cols (cols4results res)]
-    [:table.table
-      [:thead
-        [:tr
-          (map to-th cols)]]
-      [:tbody
-        (->> res
-             (map (comp to-entity first))
-             (map (partial to-tr cols)))]]))
+(defn render [tx]
+  (let [res (q (read-string tx) (db/database))]
+    (if (empty? res)
+      "No Results..."
+      [:span
+        [:h2 (format "Found %d result(s)" (count res))]
+        (table res)])))
+
 

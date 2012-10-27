@@ -7,14 +7,15 @@
             [ring.util.response :as response]
             (lewis [pages :as pages]
                    [session :as session]
-                   [actions :as actions])))
+                   [actions :as actions])
+            [lewis.data.core :as data]))
 
 (defroutes session-routes
   (GET "/" [] pages/home)
   (GET "/disconnect" [] actions/disconnect)
 
-  (GET "/data" [] pages/query)
-  (GET "/data/insert" [] pages/insert-form)
+  (GET "/data" [] data/query)
+  (GET "/data/insert" [] data/insert-form)
 
   (GET "/schema" [] pages/schema)
   (GET "/schema/transact" [] pages/transact-form)

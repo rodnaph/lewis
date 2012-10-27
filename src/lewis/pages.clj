@@ -7,14 +7,6 @@
             [lewis.db :as db]
             [lewis.history :as history]))
 
-(defn- results-table [tx]
-  (let [res (q (read-string tx) (db/database))]
-    (if (empty? res)
-      "No Results..."
-      [:span
-        [:h2 (format "Found %d result(s)" (count res))]
-        (results/table res)])))
-
 (defn- to-recent-query [tx]
   (let [url (format "/session/data?tx=%s" tx)]
     [:li
@@ -56,25 +48,6 @@
           [:p [:i "Filter by namespace?"]]]
         [:div.span12
           (results/schema (q tx (db/database)))]])))
-
-(defn insert-form [req]
-  "Insert")
-
-(defn query [{:keys [params]}]
-  (let [tx (:tx params)]
-    (history/add-query! tx)
-    (layout/standard "Query"
-      [:div.row
-        [:div.span12
-          (if (not tx)
-              [:h1 "Perform a Query"])
-          [:p "Enter your "
-            [:a {:href "http://richhickey.github.com/clojure-contrib/doc/datalog.html"} "Datalog"]
-            " query below, and click 'Execute'"]
-          (form/query tx)]
-        (if tx 
-          [:div.span12
-            (results-table tx)])])))
 
 (defn transact-form [{:keys [session]}]
   (layout/standard "Home"
