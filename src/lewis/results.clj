@@ -44,7 +44,7 @@
 
 (defn schema [results]
   [:h2 (format "Found %d result(s)" (count results))]
-  [:table.table
+  [:table.table.schema-table
     [:thead
       [:tr
         [:th "Identifier"]

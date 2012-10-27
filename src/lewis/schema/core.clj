@@ -64,6 +64,7 @@
           [:pre (pr-str tx)]]
         [:div.span12.edit-query
           [:a {:href edit-url} "Edit query"]]
+        [:div.span12.schema-filter]
         [:div.span12
           (results/schema (q tx (db/database)))]])))
 

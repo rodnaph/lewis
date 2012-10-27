@@ -1,6 +1,40 @@
 
 $(function()
 {
+    function toggle(value, index, element)
+    {
+        var row = $(element);
+        var toggler = row.html().indexOf(value) != -1
+            ? 'show'
+            : 'hide';
+
+        row[toggler]();
+    }
+
+    function update()
+    {
+        var value = $(this).val();
+        var filter = _.bind(toggle, {}, value);
+
+        $('.schema-table tbody tr')
+            .each(filter);
+    }
+
+    function init()
+    {
+        var input = $('<input type="text"/>')
+            .attr({ placeholder: 'Filter schema' })
+            .appendTo(this);
+
+        input.keyup(update);
+    }
+
+    $('.schema-filter')
+        .each(init);
+});
+
+$(function()
+{
     function controlFor(container, name)
     {
         return $('*[name=' +name+ ']', container);
@@ -74,15 +108,15 @@ $(function()
 
 $(function()
 {
-    function removeInsertRow(row)
+    function remove(row)
     {
         row.remove();
     }
 
-    function initInsertRow()
+    function initRow()
     {
         var row = $(this);
-        var destroy = _.bind(removeInsertRow, {}, row);
+        var destroy = _.bind(remove, {}, row);
 
         $('<a></a>')
             .html('delete')
@@ -91,7 +125,7 @@ $(function()
             .appendTo(row);
     }
 
-    function makeInsertRow(name)
+    function make(name)
     {
         var input = $('<input type="text"/>')
             .attr({name: name});
@@ -101,25 +135,25 @@ $(function()
             .append(input);
     }
 
-    function addInsertRow(fields)
+    function add(fields)
     {
         var row = $('<div></div>')
             .addClass('field')
-            .append(makeInsertRow('name'))
-            .append(makeInsertRow('value'))
+            .append(make('name'))
+            .append(make('value'))
             .appendTo(fields);
 
-        initInsertRow.apply(row);
+        initRow.apply(row);
     }
 
     /**
      * Initialise the data insert form to allow adding/deleting fields
      *
      */
-    function initDataInsert()
+    function init()
     {
         var fields = $('.fields', this);
-        var addRow = _.bind(addInsertRow, {}, fields);
+        var addRow = _.bind(add, {}, fields);
 
         $('<a></a>')
             .addClass('add btn btn-info')
@@ -129,7 +163,7 @@ $(function()
     }
 
     $('.form-insert')
-        .each(initDataInsert);
+        .each(init);
 });
 
 $(function()
