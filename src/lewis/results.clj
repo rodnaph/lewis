@@ -1,7 +1,8 @@
 
 (ns lewis.results
   (:use [datomic.api :only [q] :as d])
-  (:require [lewis.db :as db]))
+  (:require [lewis.db :as db]
+            [lewis.ws :as ws]))
 
 (declare id2entity)
 
@@ -76,6 +77,7 @@
     "Error: " (.getMessage e)])
 
 (defn render [tx]
+  (ws/message {:type :data-tx :data tx})
   (try
     (let [res (q (read-string tx) (db/database))]
       (if (empty? res)

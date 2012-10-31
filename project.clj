@@ -7,6 +7,7 @@
                  [ring/ring-devel "1.1.3"]
                  [hiccup "1.0.1"]
                  [cheshire "4.0.3"]
+                 [aleph "0.3.0-beta6"]
                  [com.datomic/datomic-free "0.8.3551"]]
   :main lewis.core)
 
