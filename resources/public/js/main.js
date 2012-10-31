@@ -11,6 +11,34 @@ function valueFrom(name)
 }
 
 /**
+ * Stats
+ *
+ */
+
+$(function()
+{
+    function onOpen()
+    {
+        this.send("connect");
+    }
+
+    function onMessage(evt)
+    {
+        console.log('Message: ', evt.data);
+    }
+
+    function init()
+    {
+        var ws = new WebSocket("ws://localhost:5556");
+
+        ws.onopen = _.bind(onOpen, ws);
+        ws.onmessage = _.bind(onMessage, ws);
+    }
+
+    $('.stats').each(init);
+});
+
+/**
  * Schema filtering
  */
 

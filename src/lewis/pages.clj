@@ -30,7 +30,7 @@
         [:h1 "Home"]
         [:p "Use the links on the top navbar to move around the app."]
         [:h2 "Statistics"]
-        [:p "@todo if makes sense"]]
+        [:div.stats]]
       [:div.span4
         [:h2 "Recent Queries"]
         [:ul
