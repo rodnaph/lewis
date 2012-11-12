@@ -17,7 +17,6 @@
 
   (GET "/data" [] data/query)
   (GET "/data/insert" [] data/insert-form)
-  (POST "/data/insert" [] data/insert)
 
   (GET "/schema" [] schema/show)
   (GET "/schema.json" [] schema/json)
