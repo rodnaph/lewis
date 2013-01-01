@@ -1,38 +1,46 @@
 
 (ns lewis.pages
-  (:use [datomic.api :only [q] :as d])
+  (:use [net.cgrand.enlive-html :only [deftemplate defsnippet content do-> set-attr]] 
+        [datomic.api :only [q] :as d])
   (:require [lewis.layout :as layout]
             [lewis.form :as form]
             [lewis.results :as results]
             [lewis.db :as db]
             [lewis.history :as history]))
 
-(defn- to-recent-query [tx]
-  (let [url (format "/session/data?tx=%s" tx)]
-    [:li
-      [:a {:href url} tx]]))
+(defn- query-url-for [tx]
+  (format "/session/data?tx=%s" tx))
+
+(defsnippet connect-snippet "connect.html" [:body :> :*] [])
+
+(defsnippet recent-query-snippet "home.html" [:.recent-queries :li]
+  [recent-query]
+  [:a] (do-> (content recent-query)
+             (set-attr :href (query-url-for recent-query)))) 
+
+(defsnippet home-snippet "home.html" [:body :> :*]
+  [recent-queries]
+  [:.recent-queries] (content
+                       (map recent-query-snippet recent-queries)))
+
+(deftemplate connect-template "index.html"
+  []
+  [:title] (content "Lewis - Connect")
+  [:.loggedin] nil
+  [:.content] (content (connect-snippet)))
+
+(deftemplate home-template "index.html"
+  [recent-queries]
+  [:title] (content "Lewis - Home")
+  [:.content] (content (home-snippet recent-queries)))
 
 ;; Public
 ;; ------
 
 (defn index [req]
-  (layout/standard "Connect"
-    [:div.row
-      [:div.span12
-        [:h1 "Connect"]
-        [:p "Enter the Datomic URI to connect."]
-        (form/connect)]]))
+  (connect-template))
 
 (defn home [req]
-  (layout/standard "Home"
-    [:div.row
-      [:div.span8
-        [:h1 "Home"]
-        [:p "Use the links on the top navbar to move around the app."]
-        [:h2 "Statistics"]
-        [:p "@todo if makes sense"]]
-      [:div.span4
-        [:h2 "Recent Queries"]
-        [:ul
-          (map to-recent-query (history/queries))]]]))
+  (home-template
+    (history/queries)))
 

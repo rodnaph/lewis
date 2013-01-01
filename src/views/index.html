@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lewis - Home</title>
+        <link href="/assets/bootstrap-2.0/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="/assets/codemirror-2.34/codemirror.css" rel="stylesheet" type="text/css"/>
+        <link href="/assets/select2-3.2/select2.css" rel="stylesheet" type="text/css"/>
+        <link href="/assets/css/main.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <a class="brand" href="/session">Lewis</a>
+                        <div class="loggedin">
+                            <ul class="nav">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="/session/data">Data <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/session/data">Query</a></li>
+                                        <li><a href="/session/data/insert">Insert</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="/session/schema">Schema <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/session/schema">Browse</a></li>
+                                        <li><a href="/session/schema/update">Update</a></li>
+                                        <li><a href="/session/schema/transact">Transact</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="disconnect" href="/session/disconnect">Disconnect</a>
+                                </li>
+                            </ul>
+                            <div class="pull-right uri">datomic:free://localhost:4334/database</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="span12">Content here</div>
+            </div>
+            <div class="row">
+                <div class="span12 footer">Lewis</div>
+            </div>
+            <script src="/assets/js/3rdparty/jquery-1.8.2.js" type="text/javascript"></script>
+            <script src="/assets/select2-3.2/select2.min.js" type="text/javascript"></script>
+            <script src="/assets/bootstrap-2.0/js/bootstrap.js" type="text/javascript"></script>
+            <script src="/assets/codemirror-2.34/codemirror.js" type="text/javascript"></script>
+            <script src="/assets/js/3rdparty/underscore-1.4.2.js" type="text/javascript"></script>
+            <script src="/assets/js/3rdparty/codemirror/clojure.js" type="text/javascript"></script>
+            <script src="/assets/js/main.js" type="text/javascript"></script>
+        </div>
+    </body>
+</html>
