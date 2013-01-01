@@ -7,3 +7,5 @@
 /checkouts
 /.lein-deps-sum
 .DS_Store
+/target
+/.lein-plugins
