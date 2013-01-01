@@ -8,5 +8,6 @@
                  [hiccup "1.0.1"]
                  [cheshire "4.0.3"]
                  [com.datomic/datomic-free "0.8.3551"]]
-  :main lewis.core)
+  :main lewis.core
+  :source-paths ["src/clojure" "src/views"])
 
