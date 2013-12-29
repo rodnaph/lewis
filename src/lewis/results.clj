@@ -1,7 +1,6 @@
-
 (ns lewis.results
-  (:use [datomic.api :only [q] :as d])
-  (:require [lewis.db :as db]))
+  (:require [datomic.api :as d :refer [q]]
+            [lewis.db :as db]))
 
 (declare id2entity)
 

@@ -1,4 +1,3 @@
-
 (ns lewis.actions
   (:require [lewis.db :as db]
             [ring.util.response :as response]))

@@ -1,7 +1,6 @@
-
 (ns lewis.core
-  (:require [ring.adapter.jetty :as jetty]
-            [lewis.web :as web]))
+  (:require [lewis.web :as web]
+            [ring.adapter.jetty :as jetty]))
 
 (defn -main [& args]
   (jetty/run-jetty 

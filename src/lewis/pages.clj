@@ -1,11 +1,7 @@
-
 (ns lewis.pages
-  (:use [datomic.api :only [q] :as d])
-  (:require [lewis.layout :as layout]
-            [lewis.form :as form]
-            [lewis.results :as results]
-            [lewis.db :as db]
-            [lewis.history :as history]))
+  (:require [lewis.form :as form]
+            [lewis.history :as history]
+            [lewis.layout :as layout]))
 
 (defn- to-recent-query [tx]
   (let [url (format "/session/data?tx=%s" tx)]

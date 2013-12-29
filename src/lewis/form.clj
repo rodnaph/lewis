@@ -1,6 +1,5 @@
-
 (ns lewis.form
-  (:use (hiccup core form)))
+  (:require [hiccup.form :refer :all]))
 
 (declare submit)
                   

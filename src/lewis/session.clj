@@ -1,4 +1,3 @@
-
 (ns lewis.session
   (:require [ring.util.response :as response]))
 

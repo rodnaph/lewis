@@ -1,12 +1,9 @@
-
 (ns lewis.data.core
-  (:use (hiccup form)
-        [datomic.api :only [q] :as d])
-  (:require (lewis [db :as db]
-                   [results :as results]
-                   [layout :as layout]
-                   [form :as form]
-                   [history :as history])))
+  (:require [hiccup.form :refer :all]
+            [lewis.form :as form]
+            [lewis.history :as history]
+            [lewis.layout :as layout]
+            [lewis.results :as results]))
 
 ;; Public
 ;; ------

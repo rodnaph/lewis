@@ -1,4 +1,3 @@
-
 (ns lewis.history)
 
 (def qs (ref []))
