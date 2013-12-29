@@ -1,4 +1,3 @@
-
 Lewis
 =====
 
@@ -13,10 +12,10 @@ Clone the repo and then run Lewis with Leiningen.
 ```
 git clone https://github.com/rodnaph/lewis.git
 cd lewis
-lein run
+lein ring server
 ```
 
-You can then open your browser to _http://localhost:5555_, and you
+Your  browser will automatically open to _http://localhost:5555_, and you
 should see the web interface where you can connect.  Just enter the
 Datomic URI to your database.
 
@@ -54,10 +53,14 @@ the schema attributes you want, and the EDN is created for you below.
 
 ![](http://github.com/rodnaph/lewis/raw/master/screenshots/update.png)
 
+Production
+==========
+
+To use in production, run `lein run` in the main directory to launch a jetty server.
+
 TODO
 ====
 
 I'm hacking on this project to learn more about Datomic, so not even sure if what I've
 done so far is useful (or makes sense).  Making up features as I go then...  but if
 you do have any ideas please just open an issue or get in touch.
-
