@@ -1,13 +1,12 @@
-
 (ns lewis.schema.core
-  (:use (hiccup form)
-        [datomic.api :only [q] :as d])
   (:require [cheshire.core :as json]
-            [ring.util.response :as response]
-            [lewis.layout :as layout]
+            [datomic.api :as d :refer [q]]
+            [hiccup.form :refer :all]
+            [lewis.db :as db]
             [lewis.form :as form]
+            [lewis.layout :as layout]
             [lewis.results :as results]
-            [lewis.db :as db]))
+            [ring.util.response :as response]))
 
 (def schema-tx '[:find ?e 
                  :where [?e :db/valueType]])

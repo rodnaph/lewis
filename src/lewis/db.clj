@@ -1,6 +1,5 @@
-
 (ns lewis.db
-  (:use [datomic.api :only [q db] :as d]))
+  (:require [datomic.api :as d :refer [db]]))
 
 (def ^:dynamic cnn (atom nil)) 
 

@@ -1,15 +1,14 @@
-
 (ns lewis.web
-  (:use compojure.core
-        (ring.middleware reload stacktrace))
-  (:require (compojure [handler :as handler]
-                       [route :as route])
-            [ring.util.response :as response]
-            (lewis [pages :as pages]
-                   [session :as session]
-                   [actions :as actions])
+  (:require [compojure.core :refer :all]
+            [compojure.handler :as handler]
+            [compojure.route :as route]
+            [lewis.actions :as actions]
             [lewis.data.core :as data]
-            [lewis.schema.core :as schema]))
+            [lewis.pages :as pages]
+            [lewis.schema.core :as schema]
+            [lewis.session :as session]
+            [ring.middleware.reload :refer :all]
+            [ring.middleware.stacktrace :refer :all]))
 
 (defroutes session-routes
   (GET "/" [] pages/home)

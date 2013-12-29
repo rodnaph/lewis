@@ -1,7 +1,6 @@
-
 (ns lewis.layout
-  (:use (hiccup core page))
-  (:require [lewis.session :as session]))
+  (:require [hiccup.page :refer :all]
+            [lewis.session :as session]))
 
 (defn standard [title & content]
   (let [home-url (if (session/exists) "/session" "/")]
