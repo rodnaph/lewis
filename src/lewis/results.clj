@@ -49,7 +49,9 @@
 ;; ------
 
 (defn id2entity [id]
-  (d/entity (db/database) id))
+  (merge
+    {:db-id id}
+    (d/entity (db/database) id)))
 
 (def result2entity (comp id2entity first))
 
